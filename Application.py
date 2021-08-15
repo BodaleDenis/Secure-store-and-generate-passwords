@@ -1,5 +1,7 @@
 import PySimpleGUI as sg
-from utils import *
+import sys
+sys.path.append("./")
+from src.utils import *
 sg.theme('BluePurple')
 
 layout = [[sg.Text('Generated Password:'), sg.Text(size=(15, 1), key='-OUTPUT-')],

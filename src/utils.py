@@ -1,5 +1,7 @@
 from queue import Empty
-from constexpr import *
+import sys
+sys.path.append("./")
+from src.constexpr import *
 from cryptography.fernet import Fernet
 import random
 import os
