@@ -1,5 +1,6 @@
 from queue import Empty
 import sys
+from typing import Counter
 sys.path.append("./")
 from src.constexpr import *
 from cryptography.fernet import Fernet
@@ -15,14 +16,14 @@ def password_generator():
         password
     """
     generated_password = ''
-    password_chars = [VOWELS, CONSONATES, SPECIAL_CHAR, NUMBERS]
+    password_chars = [LOWERCASE, UPPERCASE, SPECIAL_CHAR, NUMBERS]
     while len(generated_password) < 10 :
         random_list = random.choice(password_chars)
         element_from_list = random.choice(random_list)
         generated_password += element_from_list
     return generated_password
 
-def store_login_data(website, password):
+def store_login_data(website, password, is_tested = False):
     """
     The logic behind Store button, it stores data in My Data file
     containing the required info
@@ -30,11 +31,15 @@ def store_login_data(website, password):
     Args:
         website (string): Website in which you use your password to be stored
         password (string): Password to be stored
+        is_tested (bool): Marks if this method is called in a test enviorment, False by default
 
     Returns:
         [string]: Returns {website} : {password} inside the file My Data
     """
-    my_data_file = open('My Data', 'a+')
+    if is_tested:
+        my_data_file = open(DUMMY_DATA, 'a+')
+    else:
+        my_data_file = open(MY_DATA_FILE, 'a+')
     append_content = website + " : " + password + '\n'
     my_data_file.write(append_content)
     return append_content
@@ -91,3 +96,17 @@ def file_decrypt(file_to_decrypt, key):
     with open(file_to_decrypt, 'wb') as file:
         decrypted_file = file.write(decrypted_bytes)
     os.remove(KEY_FILE)
+
+def string_uniqueness(string_to_check):
+    """
+    Check how many unique chars are into a string
+
+    Args:
+        string_to_check (string): The string to be checked
+
+    Returns:
+        [int]: Returns an int which represents how many unique chars are in string
+    """
+    frequency = Counter(string_to_check)
+    return len(frequency)
+
