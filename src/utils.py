@@ -73,7 +73,7 @@ def file_encrypt(file_to_encrypt):
     with open(file_to_encrypt, 'wb') as encrypted_file:
         encrypted_file.write(encrypted_text)
     with open(MY_DATA_FILE, 'a+') as file:
-        file.write(MARK_ENCRYPTION)
+        file.write('\n' + MARK_ENCRYPTION)
 
 def file_decrypt(file_to_decrypt, key):
     """
