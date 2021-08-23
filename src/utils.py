@@ -56,20 +56,24 @@ def file_encrypt(file_to_encrypt):
         [bool]: In case key already exists doesn't encrypt, else it encrypts {file_to_encrypt}
     """
     generated_key = Fernet.generate_key()
-    if(os.path.exists(KEY_FILE)):
-        print("Key already exists")
-        return False
-    else:
-        with open(KEY_FILE, 'wb') as key_file:
-            key_file.write(generated_key)
-        with open(KEY_FILE, 'rb') as key_file:
-            encryption_key = key_file.read()
-        fernet_encrypter = Fernet(generated_key)
-        with open(file_to_encrypt, 'rb') as file:
-            orig_file_bytes = file.read()
+    if(os.path.exists(MY_DATA_FILE)):
+        with open(MY_DATA_FILE, 'r') as file:
+            content = file.read()
+        if MARK_ENCRYPTION in content:
+            return False
+    
+    with open(KEY_FILE, 'wb') as key_file:
+        key_file.write(generated_key)
+    with open(KEY_FILE, 'rb') as key_file:
+        encryption_key = key_file.read()
+    fernet_encrypter = Fernet(generated_key)
+    with open(file_to_encrypt, 'rb') as file:
+        orig_file_bytes = file.read()
         encrypted_text = fernet_encrypter.encrypt(orig_file_bytes)
-        with open(file_to_encrypt, 'wb') as encrypted_file:
-            encrypted_file.write(encrypted_text)
+    with open(file_to_encrypt, 'wb') as encrypted_file:
+        encrypted_file.write(encrypted_text)
+    with open(MY_DATA_FILE, 'a+') as file:
+        file.write(MARK_ENCRYPTION)
 
 def file_decrypt(file_to_decrypt, key):
     """

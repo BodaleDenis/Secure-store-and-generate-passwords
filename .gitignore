@@ -9,3 +9,4 @@ src/__pycache__/utils.cpython-38.pyc
 src/__pycache__/constexpr.cpython-38.pyc
 tests/__pycache__/__init__.cpython-38.pyc
 tests/__pycache__/test_project.cpython-38-pytest-6.2.4.pyc
+KeyFile.key
